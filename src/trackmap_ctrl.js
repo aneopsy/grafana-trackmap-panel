@@ -1,7 +1,7 @@
 import L from './leaflet/leaflet.js';
+import './leaflet/leaflet.rotatedmarker.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
-import './leaflet_rotatedmarker/leaflet.rotatedmarker.js';
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
@@ -15,7 +15,7 @@ import './partials/module.css!';
 
 function log(msg) {
   // uncomment for debugging
-  //console.log(msg);
+  console.log(msg);
 }
 
 function getAntimeridianMidpoints(start, end) {

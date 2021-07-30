@@ -26,11 +26,11 @@ module.exports = (grunt) => {
           },
         },
       },
-      leaflet_rotatedmarker: {
+      rotatedmarker: {
         cwd: 'node_modules/leaflet-rotatedmarker/',
         expand: true,
         src: ['leaflet.rotatedMarker.js'],
-        dest: 'dist/leaflet_rotatedmarker/'
+        dest: 'dist/leaflet/'
       },
       leaflet: {
         cwd: 'node_modules/leaflet/dist/',
