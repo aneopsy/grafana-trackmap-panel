@@ -1,6 +1,6 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
-// import Gradient from "javascript-color-gradient";
+import Gradient from "javascript-color-gradient";
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
