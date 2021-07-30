@@ -348,8 +348,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log("addDataToMap");
     //this.colorGradient.setMidpoint(this.coordSlices.length);
 
-    var myIcon = L.icon({
-      iconUrl: require('./img/marker.svg'),
+    const vessel = L.icon({
+      iconUrl: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512"><path d="M224 387.814V512L32 320l192-192v126.912C447.375 260.152 437.794 103.016 380.931 0 521.286 151.707 491.481 394.785 224 387.814z"/></svg>',
       iconSize: [32, 32],
       iconAnchor: [16, 16]
   });
@@ -367,7 +367,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: myIcon}).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel}).addTo(this.leafMap);
     //this.actualPositionMarker.setRotationAngle(180);
 
     this.zoomToFit();
