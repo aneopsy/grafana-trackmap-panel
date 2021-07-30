@@ -345,7 +345,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   // Add the circles and polyline(s) to the map
   addDataToMap() {
     log("addDataToMap");
-    this.colorGradient.setMidpoint(this.coordSlices.length);
+    //this.colorGradient.setMidpoint(this.coordSlices.length);
     this.polylines.length = 0;
     for (let i = 0; i < this.coordSlices.length - 1; i++) {
       const coordSlice = this.coords.slice(this.coordSlices[i], this.coordSlices[i+1])
