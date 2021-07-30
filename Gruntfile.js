@@ -22,7 +22,7 @@ module.exports = (grunt) => {
         options: {
           // Rewrite the image links to pull from the plugin's image storage when served by Grafana
           process: function (content, srcpath) {
-            return content.replace(/src\/img\//g, '/public/plugins/pr0ps-trackmap-panel/img/');
+            return content.replace(/src\/img\//g, '/public/plugins/aneopsy-trackmap-panel/img/');
           },
         },
       },
