@@ -4,7 +4,7 @@ import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
-import {MetricsPanelCtrl} from 'app/plugins/sdk';
+import { MetricsPanelCtrl } from 'app/plugins/sdk';
 
 import './leaflet/leaflet.css!';
 import './partials/module.css!';
@@ -367,7 +367,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel}).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: 45}).addTo(this.leafMap);
     //this.actualPositionMarker.setRotationAngle(180);
 
     this.zoomToFit();
