@@ -1,5 +1,5 @@
 import L from './leaflet/leaflet.js';
-import './leaflet/leaflet.rotatedmarker.js';
+//import './leaflet/leaflet.rotatedmarker.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
 
@@ -371,7 +371,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     }
 
     this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: myIcon}).addTo(this.leafMap);
-    this.actualPositionMarker.setRotationAngle(180);
+    //this.actualPositionMarker.setRotationAngle(180);
 
     this.zoomToFit();
   }
