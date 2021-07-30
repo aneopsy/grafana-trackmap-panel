@@ -1,6 +1,7 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
-import Gradient from "javascript-color-gradient";
+//import Gradient from "javascript-color-gradient";
+import 'leaflet-rotatedmarker';
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
@@ -346,26 +347,31 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   addDataToMap() {
     log("addDataToMap");
     //this.colorGradient.setMidpoint(this.coordSlices.length);
+
+    var myIcon = L.icon({
+      iconUrl: 'https://w7.pngwing.com/pngs/279/819/png-transparent-arrow-line-computer-icons-straight-arrow-angle-photography-hand.png',
+      iconSize: [38, 95],
+      iconAnchor: [22, 94],
+      popupAnchor: [-3, -76],
+      shadowSize: [68, 95],
+      shadowAnchor: [22, 94]
+  });
+
     this.polylines.length = 0;
     for (let i = 0; i < this.coordSlices.length - 1; i++) {
       const coordSlice = this.coords.slice(this.coordSlices[i], this.coordSlices[i+1])
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
-            color: 'pink',//this.colorGradient.getColor(i),
-            weight: 3,
+            color: 'red',//this.colorGradient.getColor(i),
+            weight: 2,
           }
         ).addTo(this.leafMap)
       );
     }
 
-    this.actualPositionMarker = L.circleMarker(this.coords[this.coords.length - 1].position, {
-      color: 'pink',
-      fillColor: this.panel.pointColor,
-      fillOpacity: 1,
-      weight: 1,
-      radius: 5
-    }).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: myIcon}).addTo(this.leafMap);
+    this.actualPositionMarker.setRotationAngle(180);
 
     this.zoomToFit();
   }
