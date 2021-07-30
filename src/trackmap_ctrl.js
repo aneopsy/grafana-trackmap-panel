@@ -352,7 +352,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
-            color: this.colorGradient.getColor(i),
+            color: 'pink',//this.colorGradient.getColor(i),
             weight: 3,
           }
         ).addTo(this.leafMap)
