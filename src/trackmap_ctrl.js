@@ -1,5 +1,5 @@
 import L from './leaflet/leaflet.js';
-//import './leaflet/leaflet.rotatedmarker.js';
+import './leaflet/leaflet.rotatedmarker.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
 
@@ -350,8 +350,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     const vessel = L.icon({
       iconUrl: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512"><path d="M260.884,10.5c-2.6-6.4-8.9-10.5-15.8-10.5s-13.2,4.2-15.8,10.5l-190.2,455.8c-2.7,6.4-1.2,13.7,3.6,18.7c4.9,4.9,12.2,6.4,18.6,3.9l183.8-74.2l183.7,74.1c2.1,0.8,4.3,1.2,6.4,1.2c4.5,0,8.9-1.8,12.2-5.1c4.9-4.9,6.3-12.3,3.6-18.7L260.884,10.5z M251.484,380.3c-2.1-0.8-4.2-1.2-6.4-1.2s-4.4,0.4-6.4,1.2l-152.1,61.3l158.5-379.9l158.5,380L251.484,380.3z"/></svg>',
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
   });
 
     this.polylines.length = 0;
