@@ -1,7 +1,7 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
-import 'leaflet-rotatedmarker';
+import './leaflet_rotatedmarker/leaflet.rotatedmarker.js';
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
