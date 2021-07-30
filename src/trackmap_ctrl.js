@@ -283,11 +283,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     });
 
     this.actualPositionMarker = L.circleMarker(L.latLng(0, 0), {
-      color: 'red',
+      color: 'pink',
       fillColor: this.panel.pointColor,
       fillOpacity: 1,
-      weight: 3,
-      radius: 15
+      weight: 2,
+      radius: 5
     });
 
     // Events
@@ -353,13 +353,14 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    L.circleMarker(this.coords[this.coords.length - 1].position, {
-      color: 'red',
+    this.actualPositionMarker = L.circleMarker(this.coords[this.coords.length - 1].position, {
+      color: 'pink',
       fillColor: this.panel.pointColor,
       fillOpacity: 1,
-      weight: 3,
-      radius: 15
+      weight: 1,
+      radius: 5
     }).addTo(this.leafMap);
+    
     this.zoomToFit();
   }
 
