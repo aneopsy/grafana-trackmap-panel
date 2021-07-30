@@ -349,12 +349,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     //this.colorGradient.setMidpoint(this.coordSlices.length);
 
     var myIcon = L.icon({
-      iconUrl: 'https://w7.pngwing.com/pngs/279/819/png-transparent-arrow-line-computer-icons-straight-arrow-angle-photography-hand.png',
-      iconSize: [38, 95],
-      iconAnchor: [22, 94],
-      popupAnchor: [-3, -76],
-      shadowSize: [68, 95],
-      shadowAnchor: [22, 94]
+      iconUrl: 'https://toppng.com/uploads/preview/visit-boat-top-view-11562933861ekyspqgxaf.png',
+      iconSize: [64, 64],
+      iconAnchor: [32, 32],
+      popupAnchor: [-3, -76]
   });
 
     this.polylines.length = 0;
