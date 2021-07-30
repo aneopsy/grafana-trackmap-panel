@@ -1,11 +1,15 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
+import Gradient from "javascript-color-gradient";
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
 
 import './leaflet/leaflet.css!';
 import './partials/module.css!';
+
+const color1 = "#FF0000";
+const color2 = "#0000FF";
 
 
 function log(msg) {
@@ -77,6 +81,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.hoverMarker = null;
     this.hoverTarget = null;
     this.setSizePromise = null;
+    this.colorGradient = new Gradient();
+    this.colorGradient.setGradient(color1, color2);
 
     // Panel events
     this.events.on('panel-initialized', this.onInitialized.bind(this));
@@ -339,14 +345,14 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   // Add the circles and polyline(s) to the map
   addDataToMap() {
     log("addDataToMap");
-
+    this.colorGradient.setMidpoint(this.coordSlices.length);
     this.polylines.length = 0;
     for (let i = 0; i < this.coordSlices.length - 1; i++) {
       const coordSlice = this.coords.slice(this.coordSlices[i], this.coordSlices[i+1])
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
-            color: this.panel.lineColor,
+            color: this.colorGradient.getColor(i),
             weight: 3,
           }
         ).addTo(this.leafMap)
@@ -360,7 +366,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       weight: 1,
       radius: 5
     }).addTo(this.leafMap);
-    
+
     this.zoomToFit();
   }
 
