@@ -1,6 +1,6 @@
 import L from './leaflet/leaflet.js';
 import moment from 'moment';
-import Gradient from "javascript-color-gradient";
+// import Gradient from "javascript-color-gradient";
 
 import { LegacyGraphHoverClearEvent, LegacyGraphHoverEvent } from '@grafana/data';
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
@@ -8,8 +8,8 @@ import {MetricsPanelCtrl} from 'app/plugins/sdk';
 import './leaflet/leaflet.css!';
 import './partials/module.css!';
 
-const color1 = "#FF0000";
-const color2 = "#0000FF";
+// const color1 = "#FF0000";
+// const color2 = "#0000FF";
 
 
 function log(msg) {
@@ -81,8 +81,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.hoverMarker = null;
     this.hoverTarget = null;
     this.setSizePromise = null;
-    this.colorGradient = new Gradient();
-    this.colorGradient.setGradient(color1, color2);
+    // this.colorGradient = new Gradient();
+    // this.colorGradient.setGradient(color1, color2);
 
     // Panel events
     this.events.on('panel-initialized', this.onInitialized.bind(this));
