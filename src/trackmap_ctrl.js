@@ -283,7 +283,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     });
 
     this.actualPositionMarker = L.circleMarker(L.latLng(0, 0), {
-      color: 'blue',
+      color: 'red',
       fillColor: this.panel.pointColor,
       fillOpacity: 1,
       weight: 3,
@@ -352,6 +352,14 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         ).addTo(this.leafMap)
       );
     }
+
+    L.circleMarker(this.coords[this.coords.length - 1].position, {
+      color: 'red',
+      fillColor: this.panel.pointColor,
+      fillOpacity: 1,
+      weight: 3,
+      radius: 15
+    }).addTo(this.leafMap);
     this.zoomToFit();
   }
 
