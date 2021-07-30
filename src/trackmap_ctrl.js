@@ -350,9 +350,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     var myIcon = L.icon({
       iconUrl: require('./img/marker.svg'),
-      iconSize: [64, 64],
-      iconAnchor: [32, 32],
-      popupAnchor: [-3, -76]
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
   });
 
     this.polylines.length = 0;
