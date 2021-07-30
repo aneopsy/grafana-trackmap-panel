@@ -349,7 +349,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     //this.colorGradient.setMidpoint(this.coordSlices.length);
 
     var myIcon = L.icon({
-      iconUrl: 'https://toppng.com/uploads/preview/visit-boat-top-view-11562933861ekyspqgxaf.png',
+      iconUrl: require('./img/marker.svg'),
       iconSize: [64, 64],
       iconAnchor: [32, 32],
       popupAnchor: [-3, -76]
