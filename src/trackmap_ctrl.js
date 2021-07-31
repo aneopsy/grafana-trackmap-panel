@@ -336,19 +336,16 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.windDirectionDraw.removeFrom(this.leafMap);
       this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
       this.onPanelClear();
-
-      this.leafMap.on('click', function(e){
-        log('click')
-        L.marker(e.latlng).addTo(this.leafMap);
-      });
       return;
     }
 
-    // Create the map
     this.leafMap = L.map('trackmap-' + this.panel.id, {
       scrollWheelZoom: this.panel.scrollWheelZoom,
       zoomSnap: 0.5,
       zoomDelta: 1,
+    }).on('click', function(e){
+      log('click: ', e.latlng)
+      L.marker(e.latlng).addTo(this.leafMap);
     });
 
     // Create the layer changer
