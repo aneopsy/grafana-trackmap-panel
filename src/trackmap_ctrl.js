@@ -232,6 +232,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.hoverTarget == null){
       this.hoverMarker.addTo(this.leafMap);
       this.vesselPos.addTo(this.leafMap);
+      this.anchorPos.addTo(this.leafMap);
     }
 
     this.hoverTarget = target;
@@ -497,7 +498,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const wind = data[3].datapoints;
     const anchor = data[4].datapoints;
     for (let i = 0; i < lats.length; i++) {
-      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null || wind[i][0] == null || anchor[i][0] == null ||
+      if (lats[i][0] == null || lons[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
         continue;
