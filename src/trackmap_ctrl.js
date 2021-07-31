@@ -456,7 +456,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: this.panel.anchorRadiusColor,
     weight: 1, fillOpacity: 0.2}).addTo(this.leafMap);
     this.vesselDirectionDraw = L.polyline(
-      [vessel, destination(vessel,bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position))], {
+      [vessel, destination(vessel, bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position), 50)], {
         color: this.panel.windColor,
         weight: 1,
       }
