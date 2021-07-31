@@ -190,7 +190,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       idx--;
     }
     this.hoverMarker.setLatLng(this.coords[idx].position);
-    this.actualPositionMarker.setLatLng(this.coords[idx].position);
     this.render();
   }
 
@@ -200,9 +199,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.hoverTarget = null;
     if (this.hoverMarker) {
       this.hoverMarker.removeFrom(this.leafMap);
-    }
-    if (this.actualPositionMarker) {
-      this.actualPositionMarker.removeFrom(this.leafMap);
     }
   }
 
@@ -256,6 +252,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Create the map or get it back in a clean state if it already exists
     if (this.leafMap) {
       this.polylines.forEach(p=>p.removeFrom(this.leafMap));
+      this.hoverMarker.removeFrom(this.leafMap);
       this.onPanelClear();
       return;
     }
