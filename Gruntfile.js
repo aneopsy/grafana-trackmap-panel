@@ -41,7 +41,7 @@ module.exports = (grunt) => {
       leaflet: {
         cwd: 'node_modules/leaflet/dist/',
         expand: true,
-        src: ['leaflet.js', 'leaflet.css', 'images'],
+        src: ['leaflet.js', 'leaflet.js.map', 'leaflet.css', 'images'],
         dest: 'dist/leaflet/'
       },
       leaflet_img: {
