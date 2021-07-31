@@ -152,6 +152,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.wind = null;
     this.vesselPos = null;
     this.anchorPos = null;
+    
+    this.anchorMaxRadius = null;
+    this.anchorMaxRadiusDraw = null;
     this.hoverMarker = null;
     this.windMarker = null
     this.hoverTarget = null;
@@ -429,6 +432,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.vesselPos = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPos = L.marker(anchor, {icon: anchorIcon}).addTo(this.leafMap);
+    this.anchorMaxRadiusDraw = L.circle(this.anchor, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
     this.windMarker = L.polyline(
       [vessel, destination(vessel, windAngle, 50)], {
         color: this.panel.windColor,
@@ -496,6 +500,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const heading = data[2].datapoints;
     const wind = data[3].datapoints;
     const anchor = data[4].datapoints;
+
+    this.anchorMaxRadius = data[5].datapoints[0][0];
+
     for (let i = 0; i < lats.length; i++) {
       if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null || wind[i][0] == null || anchor[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
