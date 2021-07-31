@@ -268,7 +268,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (!exact && idx > 0 && this.vesselPosLst[idx].timestamp > this.hoverTarget) {
       idx--;
     }
-    console.log(this.vesselPosLst[idx].position)
     this.hoverMarker.setLatLng(this.vesselPosLst[idx].position);
     this.render();
   }
@@ -344,8 +343,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomSnap: 0.5,
       zoomDelta: 1,
     }).on('click', e => {
-      log(e)
-      //L.marker(e.latlng).addTo(this.leafMap);
+      L.marker(e.latlng).addTo(this.leafMap);
     });
 
     // Create the layer changer
