@@ -359,7 +359,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
 
-    const windPt = L.GeometryUtil.destination(vesselPos, windAngle, 50);
+    //const windPt = L.GeometryUtil.destination(vesselPos, windAngle, 50);
     // this.polylines.push(
     //   L.polyline(
     //     [vesselPos, windPt], {
