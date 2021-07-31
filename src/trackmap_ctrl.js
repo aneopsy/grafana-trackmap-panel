@@ -272,7 +272,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onPanelClear(evt) {
     log("onPanelClear");
-    // clear the highlighted circle
     this.hoverTarget = null;
     if (this.hoverMarker) {
       this.hoverMarker.removeFrom(this.leafMap);
@@ -430,7 +429,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
-    this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
+    //this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
     this.windDirectionDraw = L.polyline(
       [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
         color: this.panel.windColor,
@@ -510,12 +509,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       const pos = L.latLng(lats[i][0], lons[i][0])
 
       if (this.vesselPosLst.length > 0){
-        // Deal with the line between last point and this one crossing the antimeridian:
-        // Draw a line from the last point to the antimeridian and another from the anitimeridian
-        // to the current point.
         const midpoints = getAntimeridianMidpoints(this.vesselPosLst[this.vesselPosLst.length-1].position, pos);
         if (midpoints != null){
-          // Crossed the antimeridian, add the points to the coords array
           const lastTime = this.vesselPosLst[this.vesselPosLst.length-1].timestamp
           midpoints.forEach(p => {
             this.vesselPosLst.push({
@@ -523,17 +518,15 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
               timestamp: lastTime + ((lats[i][1] - lastTime)/2)
             })
           });
-          // Note that we need to start drawing a new line between the added points
           this.coordSlices.push(this.vesselPosLst.length - 1)
         }
       }
 
       this.vesselPosLst.push({
         position: pos,
-        heading: heading[i][0]
-      });
+        heading: heading[i][0],
         timestamp: lats[i][1]
-
+      });
     }
     this.coordSlices.push(this.vesselPosLst.length)
     this.addDataToMap();
