@@ -352,7 +352,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1514}).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
 
     this.zoomToFit();
   }
