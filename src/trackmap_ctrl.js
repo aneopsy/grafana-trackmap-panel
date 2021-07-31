@@ -343,8 +343,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       scrollWheelZoom: this.panel.scrollWheelZoom,
       zoomSnap: 0.5,
       zoomDelta: 1,
-    }).on('click', function(e){
-      log('click: ', e)
+    }).on('click', e => {
+      log(e)
       //L.marker(e.latlng).addTo(this.leafMap);
     });
 
