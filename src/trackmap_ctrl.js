@@ -524,7 +524,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         }
       }
 
-      console.log(JSON.parse(anchor[i][0]))
+      console.log(L.latLng(JSON.parse(anchor[i][0]).latitude, JSON.parse(anchor[i][0]).longitude))
       this.info.push({
         position: pos,
         heading: heading[i][0],
