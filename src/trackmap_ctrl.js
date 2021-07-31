@@ -457,7 +457,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     weight: 1, fillOpacity: 0.2}).addTo(this.leafMap);
     this.vesselDirectionDraw = L.polyline(
       [vessel, destination(vessel, bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position), 50)], {
-        color: this.panel.windColor,
+        color: this.panel.vesselDirectionColor,
         weight: 1,
       }
     ).addTo(this.leafMap)
