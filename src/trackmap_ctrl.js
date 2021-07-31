@@ -498,6 +498,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     //this.anchorMaxRadius = data[5].datapoints[0][0];
 
     for (let i = 0; i < lats.length; i++) {
+      log(i)
       if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
@@ -518,7 +519,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
           this.coordSlices.push(this.vesselPosLst.length - 1)
         }
       }
-
+      log('push')
       this.vesselPosLst.push({
         position: pos,
         heading: heading[i][0]
