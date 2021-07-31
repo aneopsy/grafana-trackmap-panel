@@ -10,9 +10,6 @@ import { MetricsPanelCtrl } from 'app/plugins/sdk';
 import './leaflet/leaflet.css!';
 import './partials/module.css!';
 
-// const color1 = "#FF0000";
-// const color2 = "#0000FF";
-
 const vesselIcon = L.icon({
   iconUrl: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 512 512"><path d="M260.884,10.5c-2.6-6.4-8.9-10.5-15.8-10.5s-13.2,4.2-15.8,10.5l-190.2,455.8c-2.7,6.4-1.2,13.7,3.6,18.7c4.9,4.9,12.2,6.4,18.6,3.9l183.8-74.2l183.7,74.1c2.1,0.8,4.3,1.2,6.4,1.2c4.5,0,8.9-1.8,12.2-5.1c4.9-4.9,6.3-12.3,3.6-18.7L260.884,10.5z M251.484,380.3c-2.1-0.8-4.2-1.2-6.4-1.2s-4.4,0.4-6.4,1.2l-152.1,61.3l158.5-379.9l158.5,380L251.484,380.3z"/></svg>',
   iconSize: [16, 16],
@@ -148,19 +145,23 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.coordSlices = [];
     this.leafMap = null;
     this.layerChanger = null;
+    
+    this.windDirection = null;
+    this.windDirectionDraw = null;
+    
     this.polylines = [];
-    this.wind = null;
     this.vesselPosDraw = null;
+    
+    this.anchorPos = null;
     this.anchorPosDraw = null;
     
     this.anchorMaxRadius = null;
     this.anchorMaxRadiusDraw = null;
+
     this.hoverMarker = null;
     this.windDirectionDraw = null
     this.hoverTarget = null;
     this.setSizePromise = null;
-    // this.colorGradient = new Gradient();
-    // this.colorGradient.setGradient(color1, color2);
 
     // Panel events
     this.events.on('panel-initialized', this.onInitialized.bind(this));
@@ -428,14 +429,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     }
 
     const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
-    const windAngle = this.vesselPosLst[this.vesselPosLst.length - 1].wind * 180/3.1415
-    const anchor = this.vesselPosLst[this.vesselPosLst.length - 1].anchor
 
     this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
-    this.anchorPosDraw = L.marker(anchor, {icon: anchorIcon}).addTo(this.leafMap);
+    this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
     this.anchorMaxRadiusDraw = L.circle(this.anchor, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
     this.windDirectionDraw = L.polyline(
-      [vessel, destination(vessel, windAngle, 50)], {
+      [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
         color: this.panel.windColor,
         weight: 1,
       }
@@ -499,9 +498,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const lats = data[0].datapoints;
     const lons = data[1].datapoints;
     const heading = data[2].datapoints;
-    const wind = data[3].datapoints;
-    const anchor = data[4].datapoints;
-
+    this.windDirection = data[3].datapoints[0][0];
+    this.anchorPos = L.latLng(JSON.parse(data[4].datapoints[0][0]).latitude, JSON.parse(data[4].datapoints[0][0]).longitude)
     this.anchorMaxRadius = data[5].datapoints[0][0];
 
     for (let i = 0; i < lats.length; i++) {
@@ -534,8 +532,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.vesselPosLst.push({
         position: pos,
         heading: heading[i][0],
-        wind: wind[i][0],
-        anchor: L.latLng(JSON.parse(anchor[i][0]).latitude, JSON.parse(anchor[i][0]).longitude)
+        wind: wind[i][0]
       });
         timestamp: lats[i][1]
 
