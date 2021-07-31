@@ -348,7 +348,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
-      $(".marker-delete-button:visible").click(() => {
+      $(".marker-location-button:visible").click(() => {
         console.log(e.latlng)
       });
       }).addTo(this.leafMap);
