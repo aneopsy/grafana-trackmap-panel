@@ -1,6 +1,6 @@
 import L from './leaflet/leaflet.js';
-import './leaflet/leaflet.rotatedMarker.js';
 import './leaflet/leaflet.geometryutil.js';
+import './leaflet/leaflet.rotatedMarker.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
 
