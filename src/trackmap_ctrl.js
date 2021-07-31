@@ -450,8 +450,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const lons = data[1].datapoints;
     const heading = data[2].datapoints;
     const wind = data[3].datapoints;
+    const anchor = data[4].datapoints;
     for (let i = 0; i < lats.length; i++) {
-      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null ||
+      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null || wind[i][0] == null || anchor[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
         continue;
@@ -480,7 +481,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.info.push({
         position: pos,
         heading: heading[i][0],
-        wind: wind[i][0]
+        wind: wind[i][0],
+        anchor: anchor[i][0]
       });
         timestamp: lats[i][1]
 
