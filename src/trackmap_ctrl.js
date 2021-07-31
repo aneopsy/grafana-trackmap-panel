@@ -157,7 +157,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onInitEditMode() {
     log("onInitEditMode");
-    this.addEditorTab('Options', 'public/plugins/pr0ps-trackmap-panel/partials/options.html', 2);
+    this.addEditorTab('Options', 'public/plugins/aneopsy-trackmap-panel/partials/options.html', 2);
   }
 
   onPanelTeardown() {
@@ -368,8 +368,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
-            color: 'red',//this.colorGradient.getColor(i),
-            weight: 2,
+            color: this.panel.lineColor,
+            weight: 1,
           }
         ).addTo(this.leafMap)
       );
