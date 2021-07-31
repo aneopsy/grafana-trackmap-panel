@@ -103,6 +103,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.wind = null;
     this.actualPositionMarker = null;
     this.hoverMarker = null;
+    this.windMarker = null
     this.hoverTarget = null;
     this.setSizePromise = null;
     // this.colorGradient = new Gradient();
@@ -381,14 +382,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
 
     const windPt = destination(vesselPos, windAngle, 50);
-    this.polylines.push(
-      L.polyline(
-        [vesselPos, windPt], {
-          color: this.panel.windColor,
-          weight: 1,
-        }
-      ).addTo(this.leafMap)
-    );
+    this.windMarker = L.polyline(
+      [vesselPos, windPt], {
+        color: this.panel.windColor,
+        weight: 1,
+      }
+    ).addTo(this.leafMap)
     this.zoomToFit();
   }
 
@@ -415,6 +414,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         color: this.panel.lineColor
       })
     });
+    if (this.windMarker){
+      this.windMarker.setStyle({
+        fillColor: this.panel.windColor,
+      });
+    }
     if (this.hoverMarker){
       this.hoverMarker.setStyle({
         fillColor: this.panel.pointColor,
