@@ -343,7 +343,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomSnap: 0.5,
       zoomDelta: 1,
     }).on('click', e => {
-      L.marker(e.latlng).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>").addTo(this.leafMap);
+      L.marker(e.latlng).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>").on("popupopen", () => {
+        var tempMarker = this;
+      $(".marker-delete-button:visible").click(function () {
+          map.removeLayer(tempMarker);
+      });
+      }).addTo(this.leafMap);
     });
 
     // Create the layer changer
