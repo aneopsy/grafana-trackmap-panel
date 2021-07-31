@@ -175,9 +175,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Global events
     this.dashboard.events.on(LegacyGraphHoverEvent.type, this.onPanelHover.bind(this), $scope);
     this.dashboard.events.on(LegacyGraphHoverClearEvent.type, this.onPanelClear.bind(this), $scope);
-    this.leafMap.on('click', function(e){
-      L.marker(e.latlng).addTo(this.leafMap);
-    });
   }
 
 
@@ -339,6 +336,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.windDirectionDraw.removeFrom(this.leafMap);
       this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
       this.onPanelClear();
+
+      this.leafMap.on('click', function(e){
+        L.marker(e.latlng).addTo(this.leafMap);
+      });
       return;
     }
 
