@@ -352,7 +352,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: 45}).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1514}).addTo(this.leafMap);
 
     this.zoomToFit();
   }
@@ -393,7 +393,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log(data);
     this.setupMap();
 
-    if (data.length === 0 || data.length !== 2) {
+    if (data.length === 0 || data.length !== 3) {
       // No data or incorrect data, show a world map and abort
       this.leafMap.setView([0, 0], 1);
       this.render();
@@ -407,6 +407,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.coordSlices.push(0)
     const lats = data[0].datapoints;
     const lons = data[1].datapoints;
+    const heading = data[2].datapoints;
     for (let i = 0; i < lats.length; i++) {
       if (lats[i][0] == null || lons[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
@@ -436,6 +437,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
       this.coords.push({
         position: pos,
+        heading: heading[i][0]
       });
         timestamp: lats[i][1]
 
