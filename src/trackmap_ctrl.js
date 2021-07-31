@@ -228,6 +228,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     // check if we are already showing the correct hoverMarker
     let target = Math.floor(evt.pos.x);
+    console.log(target)
     if (this.hoverTarget && this.hoverTarget === target) {
       return;
     }
@@ -266,6 +267,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (!exact && idx > 0 && this.vesselPosLst[idx].timestamp > this.hoverTarget) {
       idx--;
     }
+    console.log(this.vesselPosLst[idx].position)
     this.hoverMarker.setLatLng(this.vesselPosLst[idx].position);
     this.render();
   }
