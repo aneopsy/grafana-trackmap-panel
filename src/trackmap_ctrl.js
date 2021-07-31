@@ -78,10 +78,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.leafMap = null;
     this.layerChanger = null;
     this.polylines = [];
+    this.actualPositionMarker = null;
     this.hoverMarker = null;
     this.hoverTarget = null;
     this.setSizePromise = null;
-    this.actualPositionMarker = null;
     // this.colorGradient = new Gradient();
     // this.colorGradient.setGradient(color1, color2);
 
@@ -158,6 +158,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.hoverTarget == null){
       this.hoverMarker.addTo(this.leafMap);
     }
+    if (this.actualPositionMarker == null){
+      this.actualPositionMarker.addTo(this.leafMap);
+    }
 
     this.hoverTarget = target;
 
@@ -196,6 +199,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.hoverTarget = null;
     if (this.hoverMarker) {
       this.hoverMarker.removeFrom(this.leafMap);
+    }
+    if (this.actualPositionMarker) {
+      this.actualPositionMarker.removeFrom(this.leafMap);
     }
   }
 
@@ -434,8 +440,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
       this.coords.push({
         position: pos,
-        timestamp: lats[i][1]
       });
+        timestamp: lats[i][1]
 
     }
     this.coordSlices.push(this.coords.length)
