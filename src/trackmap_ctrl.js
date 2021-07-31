@@ -158,9 +158,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.hoverTarget == null){
       this.hoverMarker.addTo(this.leafMap);
     }
-    if (this.actualPositionMarker == null){
-      this.actualPositionMarker.addTo(this.leafMap);
-    }
 
     this.hoverTarget = target;
 
