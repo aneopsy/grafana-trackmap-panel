@@ -528,6 +528,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       });
     }
     this.coordSlices.push(this.vesselPosLst.length)
+    log(this.vesselPosLst)
     this.addDataToMap();
   }
 
