@@ -117,6 +117,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       lineColor: 'red',
       pointColor: 'royalblue',
       windColor: 'yellow',
+      anchorRadiusColor: 'green'
     });
 
     // Save layers globally in order to use them in options
@@ -426,7 +427,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
     this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: this.panel.anchorRadiusColor,
-    weight: 1}).addTo(this.leafMap);
+    weight: 1, fillOpacity: 0.2}).addTo(this.leafMap);
     this.windDirectionDraw = L.polyline(
       [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
         color: this.panel.windColor,
