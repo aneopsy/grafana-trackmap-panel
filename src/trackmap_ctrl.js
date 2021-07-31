@@ -144,7 +144,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     };
 
     this.timeSrv = $injector.get('timeSrv');
-    this.info = [];
+    this.vesselPosLst = [];
     this.coordSlices = [];
     this.leafMap = null;
     this.layerChanger = null;
@@ -218,7 +218,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onPanelHover(evt) {
     log("onPanelHover");
-    if (this.info.length === 0) {
+    if (this.vesselPosLst.length === 0) {
       return;
     }
 
@@ -241,16 +241,16 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Note that an exact match isn't always going to work due to rounding so
     // we clean that up later (still more efficient)
     let min = 0;
-    let max = this.info.length - 1;
+    let max = this.vesselPosLst.length - 1;
     let idx = null;
     let exact = false;
     while (min <= max) {
       idx = Math.floor((max + min) / 2);
-      if (this.info[idx].timestamp === this.hoverTarget) {
+      if (this.vesselPosLst[idx].timestamp === this.hoverTarget) {
         exact = true;
         break;
       }
-      else if (this.info[idx].timestamp < this.hoverTarget) {
+      else if (this.vesselPosLst[idx].timestamp < this.hoverTarget) {
         min = idx + 1;
       }
       else {
@@ -259,10 +259,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     }
 
     // Correct the case where we are +1 index off
-    if (!exact && idx > 0 && this.info[idx].timestamp > this.hoverTarget) {
+    if (!exact && idx > 0 && this.vesselPosLst[idx].timestamp > this.hoverTarget) {
       idx--;
     }
-    this.hoverMarker.setLatLng(this.info[idx].position);
+    this.hoverMarker.setLatLng(this.vesselPosLst[idx].position);
     this.render();
   }
 
@@ -382,7 +382,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   mapZoomToBox(e) {
     log("mapZoomToBox");
     // Find time bounds of selected coordinates
-    const bounds = this.info.reduce(
+    const bounds = this.vesselPosLst.reduce(
       function(t, c) {
         if (e.boxZoomBounds.contains(c.position)) {
           t.from = Math.min(t.from, c.timestamp);
@@ -412,7 +412,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.polylines.length = 0;
     for (let i = 0; i < this.coordSlices.length - 1; i++) {
-      const coordSlice = this.info.slice(this.coordSlices[i], this.coordSlices[i+1])
+      const coordSlice = this.vesselPosLst.slice(this.coordSlices[i], this.coordSlices[i+1])
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
@@ -423,12 +423,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    const vessel = this.info[this.info.length - 1].position
-    const windAngle = this.info[this.info.length - 1].wind * 180/3.1415
-    const anchor = this.info[this.info.length - 1].anchor
-    console.log(anchor)
+    const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
+    const windAngle = this.vesselPosLst[this.vesselPosLst.length - 1].wind * 180/3.1415
+    const anchor = this.vesselPosLst[this.vesselPosLst.length - 1].anchor
 
-    this.vesselPos = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+    this.vesselPos = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPos = L.marker(anchor, {icon: anchorIcon}).addTo(this.leafMap);
     this.windMarker = L.polyline(
       [vessel, destination(vessel, windAngle, 50)], {
@@ -489,7 +488,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     // Asumption is that there are an equal number of properly matched timestamps
     // TODO: proper joining by timestamp?
-    this.info.length = 0;
+    this.vesselPosLst.length = 0;
     this.coordSlices.length = 0;
     this.coordSlices.push(0)
     const lats = data[0].datapoints;
@@ -498,33 +497,33 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const wind = data[3].datapoints;
     const anchor = data[4].datapoints;
     for (let i = 0; i < lats.length; i++) {
-      if (lats[i][0] == null || lons[i][0] == null ||
+      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null || wind[i][0] == null || anchor[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
         continue;
       }
       const pos = L.latLng(lats[i][0], lons[i][0])
 
-      if (this.info.length > 0){
+      if (this.vesselPosLst.length > 0){
         // Deal with the line between last point and this one crossing the antimeridian:
         // Draw a line from the last point to the antimeridian and another from the anitimeridian
         // to the current point.
-        const midpoints = getAntimeridianMidpoints(this.info[this.info.length-1].position, pos);
+        const midpoints = getAntimeridianMidpoints(this.vesselPosLst[this.vesselPosLst.length-1].position, pos);
         if (midpoints != null){
           // Crossed the antimeridian, add the points to the coords array
-          const lastTime = this.info[this.info.length-1].timestamp
+          const lastTime = this.vesselPosLst[this.vesselPosLst.length-1].timestamp
           midpoints.forEach(p => {
-            this.info.push({
+            this.vesselPosLst.push({
               position: p,
               timestamp: lastTime + ((lats[i][1] - lastTime)/2)
             })
           });
           // Note that we need to start drawing a new line between the added points
-          this.coordSlices.push(this.info.length - 1)
+          this.coordSlices.push(this.vesselPosLst.length - 1)
         }
       }
 
-      this.info.push({
+      this.vesselPosLst.push({
         position: pos,
         heading: heading[i][0],
         wind: wind[i][0],
@@ -533,7 +532,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         timestamp: lats[i][1]
 
     }
-    this.coordSlices.push(this.info.length)
+    this.coordSlices.push(this.vesselPosLst.length)
     this.addDataToMap();
   }
 
