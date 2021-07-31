@@ -338,6 +338,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.onPanelClear();
 
       this.leafMap.on('click', function(e){
+        log('click')
         L.marker(e.latlng).addTo(this.leafMap);
       });
       return;
