@@ -78,6 +78,18 @@ function destination(latlng, heading, distance) {
   lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
   return L.latLng([lat2 * radInv, lon2]);
 }
+function bearing(latlng1, latlng2) {
+  var rad = Math.PI / 180,
+      lat1 = latlng1.lat * rad,
+      lat2 = latlng2.lat * rad,
+      lon1 = latlng1.lng * rad,
+      lon2 = latlng2.lng * rad,
+      y = Math.sin(lon2 - lon1) * Math.cos(lat2),
+      x = Math.cos(lat1) * Math.sin(lat2) -
+          Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+  var bearing = ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+  return bearing >= 180 ? bearing-360 : bearing;
+}
 
 
 function log(msg) {
@@ -146,6 +158,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.coordSlices = [];
     this.leafMap = null;
     this.layerChanger = null;
+
+    this.vesselDirectionDraw = null;
     
     this.windDirection = null;
     this.windDirectionDraw = null;
@@ -344,7 +358,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup("<div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>").on("popupopen", function() {
+      L.marker(e.latlng).bindPopup("<div class='display: flex;flex-direction: column;'><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>").on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
@@ -439,6 +453,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
     this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: this.panel.anchorRadiusColor,
     weight: 1, fillOpacity: 0.2}).addTo(this.leafMap);
+    this.vesselDirectionDraw = L.polyline(
+      [vessel, bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position), {
+        color: this.panel.windColor,
+        weight: 1,
+      }
+    ).addTo(this.leafMap)
     this.windDirectionDraw = L.polyline(
       [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
         color: this.panel.windColor,
