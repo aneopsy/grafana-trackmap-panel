@@ -476,7 +476,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log(data);
     this.setupMap();
 
-    if (data.length === 0 || data.length !== 3) {
+    if (data.length === 0 || data.length !== 6) {
       // No data or incorrect data, show a world map and abort
       log("ERROR DATA")
       this.leafMap.setView([0, 0], 1);
