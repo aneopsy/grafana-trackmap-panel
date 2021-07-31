@@ -159,7 +159,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.anchorMaxRadiusDraw = null;
 
     this.hoverMarker = null;
-    this.windDirectionDraw = null
     this.hoverTarget = null;
     this.setSizePromise = null;
 
