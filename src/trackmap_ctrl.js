@@ -281,14 +281,14 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log("onPanelSizeChanged");
     // KLUDGE: This event is fired too soon - we need to delay doing the actual
     //         size invalidation until after the panel has actually been resized.
-    // this.$timeout.cancel(this.setSizePromise);
-    // let map = this.leafMap;
-    // this.setSizePromise = this.$timeout(function(){
-    //   if (map) {
-    //     log("Invalidating map size");
-    //     map.invalidateSize(true);
-    //   }}, 500
-    // );
+    this.$timeout.cancel(this.setSizePromise);
+    let map = this.leafMap;
+    this.setSizePromise = this.$timeout(function(){
+      if (map) {
+        log("Invalidating map size");
+        map.invalidateSize(true);
+      }}, 500
+    );
   }
 
   applyScrollZoom() {
@@ -483,7 +483,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.render();
       return;
     }
-    log("OKOKOKOK")
     // Asumption is that there are an equal number of properly matched timestamps
     // TODO: proper joining by timestamp?
     this.vesselPosLst.length = 0;
