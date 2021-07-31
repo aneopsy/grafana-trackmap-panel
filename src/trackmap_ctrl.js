@@ -327,10 +327,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Create the map or get it back in a clean state if it already exists
     if (this.leafMap) {
       this.polylines.forEach(p=>p.removeFrom(this.leafMap));
-      this.vesselPosDraw.removeFrom(this.leafMap);
-      this.anchorPosDraw.removeFrom(this.leafMap);
-      this.windDirectionDraw.removeFrom(this.leafMap);
-      this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
+      // this.vesselPosDraw.removeFrom(this.leafMap);
+      // this.anchorPosDraw.removeFrom(this.leafMap);
+      // this.windDirectionDraw.removeFrom(this.leafMap);
+      // this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
       this.onPanelClear();
       return;
     }
