@@ -13,6 +13,27 @@ import './partials/module.css!';
 // const color1 = "#FF0000";
 // const color2 = "#0000FF";
 
+function destination(latlng, heading, distance) {
+  heading = (heading + 360) % 360;
+  var rad = Math.PI / 180,
+      radInv = 180 / Math.PI,
+      R = 6378137, // approximation of Earth's radius
+      lon1 = latlng.lng * rad,
+      lat1 = latlng.lat * rad,
+      rheading = heading * rad,
+      sinLat1 = Math.sin(lat1),
+      cosLat1 = Math.cos(lat1),
+      cosDistR = Math.cos(distance / R),
+      sinDistR = Math.sin(distance / R),
+      lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
+          sinDistR * Math.cos(rheading)),
+      lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
+          cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
+  lon2 = lon2 * radInv;
+  lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
+  return L.latLng([lat2 * radInv, lon2]);
+}
+
 
 function log(msg) {
   // uncomment for debugging
@@ -359,15 +380,15 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
 
-    //const windPt = L.GeometryUtil.destination(vesselPos, windAngle, 50);
-    // this.polylines.push(
-    //   L.polyline(
-    //     [vesselPos, windPt], {
-    //       color: 'yellow',
-    //       weight: 2,
-    //     }
-    //   ).addTo(this.leafMap)
-    // );
+    const windPt = destination(vesselPos, windAngle, 50);
+    this.polylines.push(
+      L.polyline(
+        [vesselPos, windPt], {
+          color: 'yellow',
+          weight: 2,
+        }
+      ).addTo(this.leafMap)
+    );
     this.zoomToFit();
   }
 
