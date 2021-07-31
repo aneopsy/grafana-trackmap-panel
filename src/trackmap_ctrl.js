@@ -78,10 +78,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.leafMap = null;
     this.layerChanger = null;
     this.polylines = [];
-    this.actualPositionMarker = null;
     this.hoverMarker = null;
     this.hoverTarget = null;
     this.setSizePromise = null;
+    this.actualPositionMarker = null;
     // this.colorGradient = new Gradient();
     // this.colorGradient.setGradient(color1, color2);
 
@@ -159,12 +159,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.hoverMarker.addTo(this.leafMap);
     }
 
-    if (this.actualPositionMarker == null){
-      this.actualPositionMarker.addTo(this.leafMap);
-    }
-
     this.hoverTarget = target;
-    this.actualPositionMarker = target;
 
     // Find the currently selected time and move the hoverMarker to it
     // Note that an exact match isn't always going to work due to rounding so
@@ -192,7 +187,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       idx--;
     }
     this.hoverMarker.setLatLng(this.coords[idx].position);
-    this.actualPositionMarker.setLatLng(this.coords[0].position);
     this.render();
   }
 
@@ -202,9 +196,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.hoverTarget = null;
     if (this.hoverMarker) {
       this.hoverMarker.removeFrom(this.leafMap);
-    }
-    if (this.actualPositionMarker) {
-      this.actualPositionMarker.removeFrom(this.leafMap);
     }
   }
 
@@ -289,14 +280,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       radius: 7
     });
 
-    this.actualPositionMarker = L.circleMarker(L.latLng(0, 0), {
-      color: 'pink',
-      fillColor: this.panel.pointColor,
-      fillOpacity: 1,
-      weight: 2,
-      radius: 5
-    });
-
     // Events
     this.leafMap.on('baselayerchange', this.mapBaseLayerChange.bind(this));
     this.leafMap.on('boxzoomend', this.mapZoomToBox.bind(this));
@@ -368,7 +351,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     }
 
     this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: 45}).addTo(this.leafMap);
-    //this.actualPositionMarker.setRotationAngle(180);
 
     this.zoomToFit();
   }
@@ -398,11 +380,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     });
     if (this.hoverMarker){
       this.hoverMarker.setStyle({
-        fillColor: this.panel.pointColor,
-      });
-    }
-    if (this.actualPositionMarker){
-      this.actualPositionMarker.setStyle({
         fillColor: this.panel.pointColor,
       });
     }
