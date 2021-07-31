@@ -384,7 +384,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.polylines.push(
       L.polyline(
         [vesselPos, windPt], {
-          color: 'yellow',
+          color: this.panel.windColor,
           weight: 1,
         }
       ).addTo(this.leafMap)
