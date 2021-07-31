@@ -421,13 +421,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-     const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
+    const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
 
-     this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
-     this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
-    this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: 'white',
-    fillColor: this.panel.pointColor,
-    fillOpacity: 1,
+    this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+    this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
+    this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: this.panel.anchorRadiusColor,
     weight: 1}).addTo(this.leafMap);
     this.windDirectionDraw = L.polyline(
       [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
@@ -469,6 +467,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.hoverMarker){
       this.hoverMarker.setStyle({
         fillColor: this.panel.pointColor,
+      });
+    }
+    if (this.anchorMaxRadiusDraw){
+      this.anchorMaxRadiusDraw.setStyle({
+        color: this.panel.anchorRadiusColor,
       });
     }
     this.render();
