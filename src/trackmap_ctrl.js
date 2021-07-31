@@ -74,7 +74,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     };
 
     this.timeSrv = $injector.get('timeSrv');
-    this.coords = [];
+    this.info = [];
     this.coordSlices = [];
     this.leafMap = null;
     this.layerChanger = null;
@@ -146,7 +146,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onPanelHover(evt) {
     log("onPanelHover");
-    if (this.coords.length === 0) {
+    if (this.info.length === 0) {
       return;
     }
 
@@ -168,16 +168,16 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Note that an exact match isn't always going to work due to rounding so
     // we clean that up later (still more efficient)
     let min = 0;
-    let max = this.coords.length - 1;
+    let max = this.info.length - 1;
     let idx = null;
     let exact = false;
     while (min <= max) {
       idx = Math.floor((max + min) / 2);
-      if (this.coords[idx].timestamp === this.hoverTarget) {
+      if (this.info[idx].timestamp === this.hoverTarget) {
         exact = true;
         break;
       }
-      else if (this.coords[idx].timestamp < this.hoverTarget) {
+      else if (this.info[idx].timestamp < this.hoverTarget) {
         min = idx + 1;
       }
       else {
@@ -186,10 +186,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     }
 
     // Correct the case where we are +1 index off
-    if (!exact && idx > 0 && this.coords[idx].timestamp > this.hoverTarget) {
+    if (!exact && idx > 0 && this.info[idx].timestamp > this.hoverTarget) {
       idx--;
     }
-    this.hoverMarker.setLatLng(this.coords[idx].position);
+    this.hoverMarker.setLatLng(this.info[idx].position);
     this.render();
   }
 
@@ -307,7 +307,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   mapZoomToBox(e) {
     log("mapZoomToBox");
     // Find time bounds of selected coordinates
-    const bounds = this.coords.reduce(
+    const bounds = this.info.reduce(
       function(t, c) {
         if (e.boxZoomBounds.contains(c.position)) {
           t.from = Math.min(t.from, c.timestamp);
@@ -343,7 +343,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     this.polylines.length = 0;
     for (let i = 0; i < this.coordSlices.length - 1; i++) {
-      const coordSlice = this.coords.slice(this.coordSlices[i], this.coordSlices[i+1])
+      const coordSlice = this.info.slice(this.coordSlices[i], this.coordSlices[i+1])
       this.polylines.push(
         L.polyline(
           coordSlice.map(x => x.position, this), {
@@ -354,10 +354,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    const vesselPos = this.coords[this.coords.length - 1].position
-    const windAngle = this.coords[this.coords.length - 1].wind * 180/3.1415
+    const vesselPos = this.info[this.info.length - 1].position
+    const windAngle = this.info[this.info.length - 1].wind * 180/3.1415
 
-    this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+    this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
 
     const windPt = L.GeometryUtil.destination(vesselPos, windAngle, 10);
     this.polylines.push(
@@ -416,7 +416,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     // Asumption is that there are an equal number of properly matched timestamps
     // TODO: proper joining by timestamp?
-    this.coords.length = 0;
+    this.info.length = 0;
     this.coordSlices.length = 0;
     this.coordSlices.push(0)
     const lats = data[0].datapoints;
@@ -431,26 +431,26 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       }
       const pos = L.latLng(lats[i][0], lons[i][0])
 
-      if (this.coords.length > 0){
+      if (this.info.length > 0){
         // Deal with the line between last point and this one crossing the antimeridian:
         // Draw a line from the last point to the antimeridian and another from the anitimeridian
         // to the current point.
-        const midpoints = getAntimeridianMidpoints(this.coords[this.coords.length-1].position, pos);
+        const midpoints = getAntimeridianMidpoints(this.info[this.info.length-1].position, pos);
         if (midpoints != null){
           // Crossed the antimeridian, add the points to the coords array
-          const lastTime = this.coords[this.coords.length-1].timestamp
+          const lastTime = this.info[this.info.length-1].timestamp
           midpoints.forEach(p => {
-            this.coords.push({
+            this.info.push({
               position: p,
               timestamp: lastTime + ((lats[i][1] - lastTime)/2)
             })
           });
           // Note that we need to start drawing a new line between the added points
-          this.coordSlices.push(this.coords.length - 1)
+          this.coordSlices.push(this.info.length - 1)
         }
       }
 
-      this.coords.push({
+      this.info.push({
         position: pos,
         heading: heading[i][0],
         wind: wind[i][0]
@@ -458,7 +458,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         timestamp: lats[i][1]
 
     }
-    this.coordSlices.push(this.coords.length)
+    this.coordSlices.push(this.info.length)
     this.addDataToMap();
   }
 
