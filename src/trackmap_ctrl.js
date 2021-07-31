@@ -524,6 +524,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         }
       }
 
+      console.log(JSON.parse(anchor[i][0]))
       this.info.push({
         position: pos,
         heading: heading[i][0],
@@ -531,7 +532,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         anchor: L.latLng(JSON.parse(anchor[i][0]).latitude, JSON.parse(anchor[i][0]).longitude)
       });
         timestamp: lats[i][1]
-        console.log(JSON.parse(anchor[i][0]))
 
     }
     this.coordSlices.push(this.info.length)
