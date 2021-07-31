@@ -411,6 +411,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onDataReceived(data) {
     log("onDataReceived");
+    log(data);
     this.setupMap();
 
     if (data.length === 0 || data.length !== 2) {
