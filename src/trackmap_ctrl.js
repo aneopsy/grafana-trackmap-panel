@@ -327,10 +327,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     // Create the map or get it back in a clean state if it already exists
     if (this.leafMap) {
       this.polylines.forEach(p=>p.removeFrom(this.leafMap));
-      // this.vesselPosDraw.removeFrom(this.leafMap);
-      // this.anchorPosDraw.removeFrom(this.leafMap);
-      // this.windDirectionDraw.removeFrom(this.leafMap);
-      // this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
+      this.vesselPosDraw.removeFrom(this.leafMap);
+      this.anchorPosDraw.removeFrom(this.leafMap);
+      this.windDirectionDraw.removeFrom(this.leafMap);
+      this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
       this.onPanelClear();
       return;
     }
@@ -421,17 +421,17 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    //const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
+    const vessel = this.vesselPosLst[this.vesselPosLst.length - 1].position
 
-    //this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
-    //this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
-    //this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
-    // this.windDirectionDraw = L.polyline(
-    //   [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
-    //     color: this.panel.windColor,
-    //     weight: 1,
-    //   }
-    // ).addTo(this.leafMap)
+    this.vesselPosDraw = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.vesselPosLst[this.vesselPosLst.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+    this.anchorPosDraw = L.marker(this.anchorPos, {icon: anchorIcon}).addTo(this.leafMap);
+    this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: 'white'}).addTo(this.leafMap);
+    this.windDirectionDraw = L.polyline(
+      [vessel, destination(vessel, this.windDirection * 180/3.1415, 50)], {
+        color: this.panel.windColor,
+        weight: 1,
+      }
+    ).addTo(this.leafMap)
     this.zoomToFit();
   }
 
@@ -492,19 +492,17 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const lons = data[1].datapoints;
     const heading = data[2].datapoints;
 
-    //this.windDirection = data[3].datapoints[0][0];
-    //this.anchorPos = L.latLng(JSON.parse(data[4].datapoints[0][0]).latitude, JSON.parse(data[4].datapoints[0][0]).longitude)
-    //this.anchorMaxRadius = data[5].datapoints[0][0];
+    this.windDirection = data[3].datapoints[0][0];
+    this.anchorPos = L.latLng(JSON.parse(data[4].datapoints[0][0]).latitude, JSON.parse(data[4].datapoints[0][0]).longitude)
+    this.anchorMaxRadius = data[5].datapoints[0][0];
 
     for (let i = 0; i < lats.length; i++) {
-      log(i)
       if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
         continue;
       }
       const pos = L.latLng(lats[i][0], lons[i][0])
-      log('lol'+i)
       if (this.vesselPosLst.length > 0){
         const midpoints = getAntimeridianMidpoints(this.vesselPosLst[this.vesselPosLst.length-1].position, pos);
         if (midpoints != null){
@@ -518,7 +516,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
           this.coordSlices.push(this.vesselPosLst.length - 1)
         }
       }
-      log('push')
       this.vesselPosLst.push({
         position: pos,
         heading: heading[i][0]
