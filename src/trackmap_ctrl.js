@@ -343,9 +343,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomSnap: 0.5,
       zoomDelta: 1,
     }).on('click', e => {
+      const that = this.leafMap
       L.marker(e.latlng).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>").on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
-        this.leafMap.removeLayer(this);
+        that.removeLayer(this);
       });
       }).addTo(this.leafMap);
     });
