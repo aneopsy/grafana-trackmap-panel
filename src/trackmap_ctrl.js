@@ -368,8 +368,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
   }
 
   mapBaseLayerChange(e) {
-    // If a tileLayer has a 'forcedOverlay' attribute, always enable/disable it
-    // along with the layer
     if (this.leafMap.forcedOverlay) {
       this.leafMap.forcedOverlay.removeFrom(this.leafMap);
       this.leafMap.forcedOverlay = null;
@@ -384,7 +382,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   mapZoomToBox(e) {
     log("mapZoomToBox");
-    // Find time bounds of selected coordinates
     const bounds = this.vesselPosLst.reduce(
       function(t, c) {
         if (e.boxZoomBounds.contains(c.position)) {
@@ -479,8 +476,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log(data);
     this.setupMap();
 
-    if (data.length === 0 || data.length < 3) {
+    if (data.length === 0 || data.length !== 3) {
       // No data or incorrect data, show a world map and abort
+      log("ERROR DATA")
       this.leafMap.setView([0, 0], 1);
       this.render();
       return;
