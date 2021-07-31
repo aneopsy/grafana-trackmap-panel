@@ -1,5 +1,6 @@
 import L from './leaflet/leaflet.js';
 import './leaflet/leaflet.rotatedMarker.js';
+import './leaflet/leaflet.geometryutil.js';
 import moment from 'moment';
 //import Gradient from "javascript-color-gradient";
 
@@ -353,8 +354,20 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       );
     }
 
-    this.actualPositionMarker = L.marker(this.coords[this.coords.length - 1].position, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+    const vesselPos = this.coords[this.coords.length - 1].position
+    const windAngle = this.coords[this.coords.length - 1].wind * 180/3.1415
 
+    this.actualPositionMarker = L.marker(vesselPos, {icon: vessel, rotationAngle: this.coords[this.coords.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
+
+    const windPt = L.GeometryUtil.destination(vesselPos, windAngle, 10);
+    this.polylines.push(
+      L.polyline(
+        [vesselPos, windPt], {
+          color: 'yellow',
+          weight: 2,
+        }
+      ).addTo(this.leafMap)
+    );
     this.zoomToFit();
   }
 

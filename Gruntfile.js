@@ -32,6 +32,12 @@ module.exports = (grunt) => {
         src: ['leaflet.rotatedMarker.js'],
         dest: 'dist/leaflet/'
       },
+      rotatedmarker: {
+        cwd: 'node_modules/leaflet-geometryutil/',
+        expand: true,
+        src: ['leaflet.geometryutil.js'],
+        dest: 'dist/leaflet/'
+      },
       leaflet: {
         cwd: 'node_modules/leaflet/dist/',
         expand: true,
