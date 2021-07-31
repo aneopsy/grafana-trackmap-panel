@@ -528,7 +528,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         position: pos,
         heading: heading[i][0],
         wind: wind[i][0],
-        anchor: anchor[i][0]
+        anchor: L.latLng(JSON.parse(anchor[i][0]).latitude, JSON.parse(anchor[i][0]).longitude)
       });
         timestamp: lats[i][1]
 
