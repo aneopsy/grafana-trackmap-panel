@@ -499,7 +499,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     for (let i = 0; i < lats.length; i++) {
       log(i)
-      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null
+      if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null ||
           (lats[i][0] == 0 && lons[i][0] == 0) ||
           lats[i][1] !== lons[i][1]) {
         continue;
