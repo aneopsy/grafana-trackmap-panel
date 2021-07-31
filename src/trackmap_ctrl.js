@@ -71,6 +71,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       showLayerChanger: true,
       lineColor: 'red',
       pointColor: 'royalblue',
+      windColor: 'yellow',
     });
 
     // Save layers globally in order to use them in options
@@ -275,6 +276,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.leafMap) {
       this.polylines.forEach(p=>p.removeFrom(this.leafMap));
       this.actualPositionMarker.removeFrom(this.leafMap);
+      this.windMarker.removeFrom(this.leafMap);
       this.onPanelClear();
       return;
     }
