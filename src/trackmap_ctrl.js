@@ -483,7 +483,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.render();
       return;
     }
-
+    log("OKOKOKOK")
     // Asumption is that there are an equal number of properly matched timestamps
     // TODO: proper joining by timestamp?
     this.vesselPosLst.length = 0;
