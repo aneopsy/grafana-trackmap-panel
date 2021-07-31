@@ -425,6 +425,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const vessel = this.info[this.info.length - 1].position
     const windAngle = this.info[this.info.length - 1].wind * 180/3.1415
     const anchor = this.info[this.info.length - 1].anchor
+    console.log(anchor)
 
     this.vesselPos = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPos = L.marker(anchor, {icon: anchorIcon}).addTo(this.leafMap);
@@ -524,7 +525,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
         }
       }
 
-      console.log(L.latLng(JSON.parse(anchor[i][0]).latitude, JSON.parse(anchor[i][0]).longitude))
       this.info.push({
         position: pos,
         heading: heading[i][0],
