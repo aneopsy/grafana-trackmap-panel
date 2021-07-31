@@ -22,20 +22,6 @@
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [
-      {
-        "name": "Project site",
-        "url": "https://github.com/pR0Ps/grafana-trackmap-panel"
-      },
-      {
-        "name": "Project Readme",
-        "url": "https://github.com/pR0Ps/grafana-trackmap-panel/blob/master/README.md"
-      },
-      {
-        "name": "Project license",
-        "url": "https://github.com/pR0Ps/grafana-trackmap-panel/blob/master/LICENSE"
-      }
-    ],
     "screenshots": [],
     "version": "0.1.1",
     "updated": "2021-03-09"
