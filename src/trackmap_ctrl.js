@@ -523,8 +523,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
       this.vesselPosLst.push({
         position: pos,
-        heading: heading[i][0],
-        timestamp: lats[i][1]
+        heading: heading[i][0]
+        //timestamp: lats[i][1]
       });
     }
     this.coordSlices.push(this.vesselPosLst.length)
