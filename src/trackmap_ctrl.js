@@ -496,9 +496,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     const lons = data[1].datapoints;
     const heading = data[2].datapoints;
 
-    this.windDirection = data[3].datapoints[0][0];
-    this.anchorPos = L.latLng(JSON.parse(data[4].datapoints[0][0]).latitude, JSON.parse(data[4].datapoints[0][0]).longitude)
-    this.anchorMaxRadius = data[5].datapoints[0][0];
+    //this.windDirection = data[3].datapoints[0][0];
+    //this.anchorPos = L.latLng(JSON.parse(data[4].datapoints[0][0]).latitude, JSON.parse(data[4].datapoints[0][0]).longitude)
+    //this.anchorMaxRadius = data[5].datapoints[0][0];
 
     for (let i = 0; i < lats.length; i++) {
       if (lats[i][0] == null || lons[i][0] == null || heading[i][0] == null
