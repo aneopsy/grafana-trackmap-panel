@@ -351,7 +351,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomSnap: 0.5,
       zoomDelta: 1,
     }).on('click', e => {
-      const marker = L.marker(e.latlng).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>");
+      const marker = L.marker(e.latlng).bindPopup("<input type='button' value='Delete this marker' class='marker-delete-button'/>").addTo(this.leafMap);
       marker.on("popupopen", this.onPopupOpen);
   }).addTo(this.leafMap);
 
