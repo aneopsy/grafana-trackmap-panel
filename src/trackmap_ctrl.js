@@ -519,6 +519,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
           midpoints.forEach(p => {
             this.vesselPosLst.push({
               position: p,
+              heading: heading[i][0],
               timestamp: lastTime + ((lats[i][1] - lastTime)/2)
             })
           });
@@ -527,9 +528,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       }
       this.vesselPosLst.push({
         position: pos,
-        heading: heading[i][0]
+        heading: heading[i][0],
+        timestamp: lats[i][1]
       });
-      timestamp: lats[i][1]
     }
     this.coordSlices.push(this.vesselPosLst.length)
     log(this.vesselPosLst)
