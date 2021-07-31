@@ -33,7 +33,7 @@ module.exports = (grunt) => {
         dest: 'dist/leaflet/'
       },
       geometryutil: {
-        cwd: 'node_modules/leaflet-geometryutil/',
+        cwd: 'node_modules/leaflet-geometryutil/src/',
         expand: true,
         src: ['leaflet.geometryutil.js'],
         dest: 'dist/leaflet/'
