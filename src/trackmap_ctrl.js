@@ -344,8 +344,8 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomSnap: 0.5,
       zoomDelta: 1,
     }).on('click', function(e){
-      log('click: ', e.latlng)
-      L.marker(e.latlng).addTo(this.leafMap);
+      log('click: ', e)
+      //L.marker(e.latlng).addTo(this.leafMap);
     });
 
     // Create the layer changer
