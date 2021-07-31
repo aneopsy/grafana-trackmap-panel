@@ -430,7 +430,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.vesselPos = L.marker(vessel, {icon: vesselIcon, rotationAngle: this.info[this.info.length - 1].heading * 180/3.1415}).addTo(this.leafMap);
     this.anchorPos = L.marker(anchor, {icon: vesselIcon}).addTo(this.leafMap);
     this.windMarker = L.polyline(
-      [vesselPos, destination(vesselPos, windAngle, 50)], {
+      [vessel, destination(vessel, windAngle, 50)], {
         color: this.panel.windColor,
         weight: 1,
       }
