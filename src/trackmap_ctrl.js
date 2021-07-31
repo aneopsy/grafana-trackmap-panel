@@ -348,6 +348,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       this.anchorPosDraw.removeFrom(this.leafMap);
       this.windDirectionDraw.removeFrom(this.leafMap);
       this.anchorMaxRadiusDraw.removeFrom(this.leafMap);
+      this.vesselDirectionDraw.removeFrom(this.leafMap);
       this.onPanelClear();
       return;
     }
@@ -454,7 +455,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.anchorMaxRadiusDraw = L.circle(this.anchorPos, {radius: this.anchorMaxRadius, color: this.panel.anchorRadiusColor,
     weight: 1, fillOpacity: 0.2}).addTo(this.leafMap);
     this.vesselDirectionDraw = L.polyline(
-      [vessel, bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position), {
+      [vessel, bearing(this.vesselPosLst[this.vesselPosLst.length - 2].position, this.vesselPosLst[this.vesselPosLst.length - 1].position)], {
         color: this.panel.windColor,
         weight: 1,
       }
@@ -504,6 +505,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     if (this.anchorMaxRadiusDraw){
       this.anchorMaxRadiusDraw.setStyle({
         color: this.panel.anchorRadiusColor,
+      });
+    }
+    if (this.vesselDirectionDraw){
+      this.vesselDirectionDraw.setStyle({
+        color: this.panel.vesselDirectionColor,
       });
     }
     this.render();
