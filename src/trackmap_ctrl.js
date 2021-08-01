@@ -130,7 +130,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       pointColor: 'royalblue',
       windColor: 'yellow',
       anchorRadiusColor: 'green',
-      vesselDirectionDraw: 'orange'
+      vesselDirectionColor: 'orange'
     });
 
     // Save layers globally in order to use them in options
