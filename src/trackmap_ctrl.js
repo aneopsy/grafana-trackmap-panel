@@ -278,7 +278,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       }
     }
 
-    // Correct the case where we are +1 index off
     if (!exact && idx > 0 && this.vesselPosLst[idx].timestamp > this.hoverTarget) {
       idx--;
     }
@@ -296,15 +295,12 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   onPanelSizeChanged() {
     log("onPanelSizeChanged");
-    // KLUDGE: This event is fired too soon - we need to delay doing the actual
-    //         size invalidation until after the panel has actually been resized.
     this.$timeout.cancel(this.setSizePromise);
-    let map = this.leafMap;
-    this.setSizePromise = this.$timeout(function(){
-      if (map) {
+    this.setSizePromise = this.$timeout(()=>{
+      if (this.leafMap) {
         log("Invalidating map size");
-        map.invalidateSize(true);
-      }}, 500
+        this.leafMap.invalidateSize(true);
+      }}, 1000
     );
   }
 
