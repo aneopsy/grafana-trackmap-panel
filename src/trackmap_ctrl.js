@@ -93,12 +93,10 @@ function bearing(latlng1, latlng2) {
 
 
 function log(msg) {
-  // uncomment for debugging
   console.log(msg);
 }
 
 function getAntimeridianMidpoints(start, end) {
-  // See https://stackoverflow.com/a/65870755/369977
   if (Math.abs(start.lng - end.lng) <= 180.0){
     return null;
   }
@@ -238,9 +236,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       return;
     }
 
-    // check if we are already showing the correct hoverMarker
     let target = Math.floor(evt.pos.x);
-    console.log(target)
     if (this.hoverTarget && this.hoverTarget === target) {
       return;
     }
