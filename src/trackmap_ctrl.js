@@ -93,10 +93,12 @@ function bearing(latlng1, latlng2) {
 
 
 function log(msg) {
+  // uncomment for debugging
   console.log(msg);
 }
 
 function getAntimeridianMidpoints(start, end) {
+  // See https://stackoverflow.com/a/65870755/369977
   if (Math.abs(start.lng - end.lng) <= 180.0){
     return null;
   }
@@ -119,7 +121,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     log("constructor");
 
     _.defaults(this.panel, {
-      maxDataPoints: 1000,
+      maxDataPoints: 500,
       autoZoom: true,
       scrollWheelZoom: false,
       defaultLayer: 'OpenStreetMap',
@@ -136,6 +138,10 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       'OpenStreetMap': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 19
+      }),
+      'OpenTopoMap': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+        maxZoom: 17
       }),
       'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Imagery &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
@@ -236,7 +242,9 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       return;
     }
 
+    // check if we are already showing the correct hoverMarker
     let target = Math.floor(evt.pos.x);
+    console.log(target)
     if (this.hoverTarget && this.hoverTarget === target) {
       return;
     }
@@ -352,7 +360,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
+      L.marker(e.latlng).bindPopup("<div class='display: flex;flex-direction: column;'><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>").on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
