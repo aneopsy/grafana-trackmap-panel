@@ -244,7 +244,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
     // check if we are already showing the correct hoverMarker
     let target = Math.floor(evt.pos.x);
-    console.log(target)
     if (this.hoverTarget && this.hoverTarget === target) {
       return;
     }
@@ -342,7 +341,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
 
   setupMap() {
     log("setupMap");
-    // Create the map or get it back in a clean state if it already exists
+
     if (this.leafMap) {
       this.polylines.forEach(p=>p.removeFrom(this.leafMap));
       this.vesselPosDraw.removeFrom(this.leafMap);
@@ -370,18 +369,11 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       }).addTo(this.leafMap);
     });
 
-    // Create the layer changer
     this.layerChanger = L.control.layers(this.layers)
-
-    // Add layers to the control widget
     if (this.panel.showLayerChanger){
       this.leafMap.addControl(this.layerChanger);
     }
-
-    // Add default layer to map
     this.layers[this.panel.defaultLayer].addTo(this.leafMap);
-
-    // Hover marker
     this.hoverMarker = L.circleMarker(L.latLng(0, 0), {
       color: 'white',
       fillColor: this.panel.pointColor,
@@ -390,7 +382,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       radius: 7
     });
 
-    // Events
     this.leafMap.on('baselayerchange', this.mapBaseLayerChange.bind(this));
     this.leafMap.on('boxzoomend', this.mapZoomToBox.bind(this));
   }
@@ -421,10 +412,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       {from: Infinity, to: -Infinity}
     );
 
-    // Set the global time range
     if (isFinite(bounds.from) && isFinite(bounds.to)) {
-      // KLUDGE: Create moment objects here to avoid a TypeError that
-      //         occurs when Grafana processes normal numbers
       this.timeSrv.setTime({
         from: moment.utc(bounds.from),
         to: moment.utc(bounds.to)
@@ -433,7 +421,6 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
     this.render();
   }
 
-  // Add the circles and polyline(s) to the map
   addDataToMap() {
     log("addDataToMap");
     this.polylines.length = 0;
