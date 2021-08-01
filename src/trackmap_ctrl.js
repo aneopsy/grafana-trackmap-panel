@@ -356,7 +356,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>${e.latlng.lat} ${e.latlng.lng}</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
+      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
