@@ -378,7 +378,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>lat:${e.latlng.lat} lng:${e.latlng.lng}</div><div>distance: ${length([this.vesselPosLst[this.vesselPosLst.length - 1].position, e.latlng]).toFixed(2)}m</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
+      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>lat: ${e.latlng.lat}</div><div>lng: ${e.latlng.lng}</div><div>distance: ${length([this.vesselPosLst[this.vesselPosLst.length - 1].position, e.latlng]).toFixed(2)}m</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
