@@ -91,6 +91,9 @@ function bearing(latlng1, latlng2) {
   return bearing >= 180 ? bearing-360 : bearing;
 }
 
+function distance(map, latlngA, latlngB) {
+  return map.latLngToLayerPoint(latlngA).distanceTo(map.latLngToLayerPoint(latlngB));
+}
 
 function log(msg) {
   // uncomment for debugging
@@ -355,7 +358,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>${e.latlng.lat} ${e.latlng.lng}</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
+      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><p>${e.latlng.lat} , ${e.latlng.lng}</p><p>distance: ${distance(this.leafMap, this.vesselPosLst[this.vesselPosLst.length - 1], e.latlng)}</p><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
