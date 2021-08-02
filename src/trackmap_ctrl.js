@@ -96,8 +96,23 @@ function distance(map, latlngA, latlngB) {
 }
 
 function length(coords) {
-  var accumulated = L.GeometryUtil.accumulatedLengths(coords);
+  var accumulated = accumulatedLengths(coords);
   return accumulated.length > 0 ? accumulated[accumulated.length-1] : 0;
+}
+
+function accumulatedLengths(coords) {
+  if (typeof coords.getLatLngs == 'function') {
+      coords = coords.getLatLngs();
+  }
+  if (coords.length === 0)
+      return [];
+  var total = 0,
+      lengths = [0];
+  for (var i = 0, n = coords.length - 1; i< n; i++) {
+      total += coords[i].distanceTo(coords[i+1]);
+      lengths.push(total);
+  }
+  return lengths;
 }
 
 function log(msg) {
@@ -363,7 +378,7 @@ export class TrackMapCtrl extends MetricsPanelCtrl {
       zoomDelta: 1,
     }).on('click', e => {
       const that = this.leafMap
-      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>lat:${e.latlng.lat} lng:${e.latlng.lng}</div><div>distance: ${length([this.vesselPosLst[this.vesselPosLst.length - 1].position, e.latlng])}</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
+      L.marker(e.latlng).bindPopup(`<div class='display: flex;flex-direction: column;'><div>lat:${e.latlng.lat} lng:${e.latlng.lng}</div><div>distance: ${length([this.vesselPosLst[this.vesselPosLst.length - 1].position, e.latlng])}m</div><input type='button' value='Get Location' class='marker-location-button'/><input type='button' value='Delete this marker' class='marker-delete-button'/></div>`).on("popupopen", function() {
       $(".marker-delete-button:visible").click(() => {
         that.removeLayer(this);
       });
